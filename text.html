@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Accelerated Habitat Designer - NASA Space Apps</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="app-header">
+        <h1>Habitat Layout Creator</h1>
+        <div class="metrics-display">
+            <div id="mass-metric"><strong>Mass:</strong> 0 kg</div>
+            <div id="power-metric"><strong>Power:</strong> 0 kW</div>
+            <div id="volume-metric"><strong>Volume:</strong> 0 m³</div>
+            <div id="crew-volume-metric"><strong>Vol/Crew:</strong> 0 m³</div>
+        </div>
+    </header>
+
+    <main class="app-main">
+        <aside class="module-sidebar">
+            <h2>Module Library</h2>
+            <div class="module-list">
+                <button class="module-btn" data-module-name="CrewBunk">Crew Bunk</button>
+                <button class="module-btn" data-module-name="GalleyUnit">Galley Unit</button>
+                <button class="module-btn" data-module-name="Treadmill">Treadmill</button>
+                <button class="module-btn" data-module-name="ScienceRack">Science Rack</button>
+                <button class="module-btn" data-module-name="WasteSystem">Waste System</button>
+                <button class="module-btn" data-module-name="HygieneStation">Hygiene Station</button>
+            </div>
+            <div class="crew-input">
+                <label for="crew-size">Crew Size:</label>
+                <input type="number" id="crew-size" value="4" min="1">
+            </div>
+            <div id="warning-message" class="warning-display">
+                </div>
+        </aside>
+
+        <section class="spline-viewer">
+            <div id="spline-container">
+                
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>A NASA Space Apps Challenge Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
