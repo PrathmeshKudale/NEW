@@ -1,62 +1,53 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM ELEMENT REFERENCES ---
-    const moduleButtons = document.querySelectorAll('.module-btn');
-    const warningDisplay = document.getElementById('warning-message');
-    
-    // --- EVENT LISTENERS ---
-    
-    // Listen for clicks on all module buttons
-    moduleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const moduleName = button.dataset.moduleName;
-            console.log(`Request to create module: ${moduleName}`);
-            
-            // **ACTION: Call the function to create a module in your Spline scene**
-            createModuleInSpline(moduleName);
-        });
+// A simple array of product data (simulating a database)
+const products = [
+    { id: 1, name: "Smartphone X10", price: 12999, image: "https://via.placeholder.com/200x180?text=Smartphone" },
+    { id: 2, name: "Wireless Headphones Pro", price: 2499, image: "https://via.placeholder.com/200x180?text=Headphones" },
+    { id: 3, name: "Smart Watch Z", price: 3999, image: "https://via.placeholder.com/200x180?text=SmartWatch" },
+    { id: 4, name: "Gaming Laptop 5000", price: 54999, image: "https://via.placeholder.com/200x180?text=Laptop" },
+];
+
+const productsContainer = document.getElementById('products-container');
+const cartIcon = document.querySelector('.cart-icon');
+let cartCount = 0;
+
+// Function to render all products
+function renderProducts() {
+    products.forEach(product => {
+        // Create the HTML element for a product card
+        const card = document.createElement('div');
+        card.classList.add('product-card');
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h3>${product.name}</h3>
+            <p class="price">₹${product.price.toLocaleString('en-IN')}</p>
+            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+        `;
+        productsContainer.appendChild(card);
     });
 
-    // --- FUNCTIONS ---
-    
-    /**
-     * **Placeholder Function:** This is where you will add your Spline API code.
-     * It will tell the Spline scene to create a new instance of a module.
-     * @param {string} name - The name of the module to create (e.g., 'CrewBunk').
-     */
-    function createModuleInSpline(name) {
-        // Example Spline API call (this is a placeholder!):
-        // spline.emitEvent('mouseDown', name);
-        
-        console.log(`In a real app, this would trigger the creation of a ${name} in Spline.`);
-        
-        // After a module is added, you would get data back from Spline and update metrics
-        updateMetrics();
-    }
-    
-    /**
-     * **Placeholder Function:** Updates all the metric displays in the header.
-     * You will get the data from your own logic that tracks all placed modules.
-     */
-    function updateMetrics() {
-        // This is a placeholder. You'll replace these with real calculated values.
-        const totalMass = 1250; // example value
-        const totalPower = 3.5;  // example value
-        
-        document.getElementById('mass-metric').innerHTML = `<strong>Mass:</strong> ${totalMass} kg`;
-        document.getElementById('power-metric').innerHTML = `<strong>Power:</strong> ${totalPower} kW`;
-        
-        console.log("Metrics would be updated here.");
-    }
+    // Add event listeners for the Add to Cart buttons
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', addToCart);
+    });
+}
 
-    /**
-     * Displays a warning message to the user.
-     * @param {string} message - The warning message to display.
-     */
-    function displayWarning(message) {
-        warningDisplay.textContent = message;
-    }
+// Function to handle adding a product to the "cart"
+function addToCart(event) {
+    const productId = event.target.getAttribute('data-id');
+    const product = products.find(p => p.id == productId);
 
-    // --- INITIALIZATION ---
-    console.log("Habitat Designer UI Initialized.");
-    displayWarning("Welcome! Select a module to begin."); // Initial message
-});
+    if (product) {
+        cartCount++;
+        cartIcon.textContent = `🛒 Cart (${cartCount})`;
+        alert(`Added ${product.name} to the cart! (This is a simple alert, a real cart is much more complex)`);
+        
+        // Disable the button temporarily to show it was clicked
+        event.target.textContent = 'Added!';
+        setTimeout(() => {
+            event.target.textContent = 'Add to Cart';
+        }, 1000);
+    }
+}
+
+// Load products when the page loads
+document.addEventListener('DOMContentLoaded', renderProducts);
